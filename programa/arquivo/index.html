@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>arquivo.c - Projeto ITP</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="../../css/extra_css.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "arquivo.c";
+    var mkdocs_page_input_path = "programa/arquivo.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Projeto ITP</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Programa</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../funcoes/">funcoes.h</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">arquivo.c</a>
+    <ul class="subnav">
+            
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../filtros/">filtros.c</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../rotacionar/">rotacionar.c</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../tamanho/">tamanho.c</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../main/">main</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Projeto ITP</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Programa &raquo;</li>
+        
+      
+    
+    <li>arquivo.c</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;math.h&gt;
+#include &quot;funcoes.h&quot;  
+</code></pre>
+
+<hr />
+<pre><code>//funcao pixelImagem() recebe como parametro o objeto IMAGEM que foi criado
+//na funcao abrirArquivo() e os valores de X e Y que informa o endereco do
+//pixel atual que sera criado.
+</code></pre>
+<pre><code>struct Pixel* pixelImagem(Imagem* imagem, int y, int x) {  
+        return &amp;(imagem-&gt;pixels[y * imagem-&gt;larg + x]);  
+}
+</code></pre>
+
+<hr />
+<pre><code>//Aloca espaco dinamicamente da imagem para o seu total de pixels.
+</code></pre>
+<pre><code>Imagem* novaImagem(int larg, int alt, int maxCor) {  
+    Imagem *imagem = (Imagem *) malloc(sizeof(Imagem));  
+    imagem-&gt;pixels = (struct Pixel *) malloc(larg * alt * sizeof(struct Pixel));  
+    imagem-&gt;larg = larg;  
+    imagem-&gt;alt = alt;  
+    imagem-&gt;maxCor = maxCor;  
+    return imagem;  
+}
+</code></pre>
+
+<hr />
+<pre><code>//recebe por parametro ARQUIVO que eh o nome do arquivo que sera
+//aberto verifica se ele existe e se eh do tipo P3 cria a
+//estrutura da nova imagem que sera tratada e copia cada valor
+//rgb de toda a imagem para dentro de cada pixel, no final retorna
+</code></pre>
+<pre><code>Imagem* abrirArquivo(char *arquivo) {
+
+    FILE *arq = fopen(arquivo, &quot;r&quot;);
+    char formato[6];
+    fgets(formato, 6, arq);
+
+    if (arq == NULL) {
+        printf(&quot;O arquivo nao foi encontrado ou nao existe.\n&quot;);
+        return NULL;
+    }
+
+    int larg, alt, maxCor, x, y;
+    Imagem *imagem = NULL;
+
+    if (strcmp(&quot;P3\n&quot;, formato) == 0) {
+        fscanf(arq, &quot;%d %d \n %d \n&quot;, &amp;larg, &amp;alt, &amp;maxCor);
+        printf(&quot;\nArquivo '%s' foi carregado com sucesso.\nTipo: %sLarg: %d\nAlt: %d\nMaxCor: %d\n&quot;, arquivo, formato, larg, alt, maxCor);
+        imagem = novaImagem(larg, alt, maxCor);
+        for (y = 0; y &lt; alt; y++) {
+            for (x = 0; x &lt; larg; x++) {
+                struct Pixel *p = pixelImagem(imagem, y, x);
+                fscanf(arq, &quot;%d %d %d&quot;, &amp;(p-&gt;r), &amp;(p-&gt;g), &amp;(p-&gt;b));
+            }            
+        }
+    } else {
+        printf(&quot;Lamentamos, atualmente so trabalhamos com PPM tipo P3. Tente Novamente!\n&quot;);
+        return NULL;
+    }
+    fclose(arq);
+
+    return imagem;
+}
+</code></pre>
+
+<hr />
+<pre><code>//funcao para salvar o novo arquivo
+</code></pre>
+<pre><code>void salvarArquivo(Imagem *imagem, char *nome_arquivo) {
+
+    FILE *arq = fopen(strcat(nome_arquivo, &quot;.ppm&quot;), &quot;wb&quot;);
+    int x, y;
+    printf(&quot;\nLarg:%d \nAlt:%d\nmaxCor:%d\nSalvando ...&quot;, imagem-&gt;larg, imagem-&gt;alt, imagem-&gt;maxCor);
+    fprintf(arq, &quot;P3\n%d %d\n%d&quot;, imagem-&gt;larg, imagem-&gt;alt, imagem-&gt;maxCor);
+        for (y = 0; y &lt; imagem-&gt;alt; y++) {
+            for (x = 0; x &lt; imagem-&gt;larg; x++) {                
+            struct Pixel *p = pixelImagem(imagem, y, x);
+            fprintf(arq, &quot;\n%d\n%d\n%d&quot;, p-&gt;r, p-&gt;g, p-&gt;b);
+        }
+    }
+    printf(&quot;\n&quot;);
+    fprintf(arq, &quot;\n &quot;);
+    fclose(arq);
+}
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../filtros/" class="btn btn-neutral float-right" title="filtros.c">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../funcoes/" class="btn btn-neutral" title="funcoes.h"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../funcoes/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../filtros/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+
+</body>
+</html>

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>main - Projeto ITP</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link href="../../css/extra_css.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "main";
+    var mkdocs_page_input_path = "programa/main.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> Projeto ITP</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Programa</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../funcoes/">funcoes.h</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../arquivo/">arquivo.c</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../filtros/">filtros.c</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../rotacionar/">rotacionar.c</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../tamanho/">tamanho.c</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">main</a>
+    <ul class="subnav">
+            
+    </ul>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">Projeto ITP</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Programa &raquo;</li>
+        
+      
+    
+    <li>main</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &quot;estrutura.h&quot;  
+
+int main() {
+    int limiar = 127;
+    char opt[5];
+    char nome_arquivo[20];
+    Imagem *original, *editada;
+
+    do {
+
+        printf(&quot;\n--- Selecione uma opcao abaixo ---\n&quot;);
+        printf(&quot;• open - Abrir arquivo\n&quot;);
+        printf(&quot;• save - Salvar arquivo\n&quot;);
+        printf(&quot;• rot - Rotacinar\n&quot;);
+        printf(&quot;• flp - Espelhar\n&quot;);
+        printf(&quot;• gry - Tons de Cinza\n&quot;);
+        printf(&quot;• blu - Bluring\n&quot;);
+        printf(&quot;• sha - Sharpening\n&quot;);
+        printf(&quot;• amp - Aumentar Escala\n&quot;);
+        printf(&quot;• red - Reduzir Escala\n&quot;);
+        printf(&quot;• thr - Thresholding (binarizacao - Preto e Branco)\n&quot;);
+        printf(&quot;• exit - Sair do programa\n&quot;);
+
+        scanf(&quot;%s&quot;, opt);
+
+        opt[strcspn(opt, &quot;\n&quot;)] = 0;
+
+        if(!strcmp(opt,&quot;open&quot;)) {
+            printf(&quot;\n&quot;);
+            printf(&quot;Qual o nome do arquivo: &quot;);
+            scanf(&quot;%s&quot;, nome_arquivo);
+            original = abrirArquivo(strcat(nome_arquivo, &quot;.ppm&quot;));
+
+        } else if(!strcmp(opt,&quot;save&quot;)) {
+            printf(&quot;\n&quot;);
+            if(original != NULL) {
+                printf(&quot;Informe o nome para salvar o arquivo: &quot;);
+                scanf(&quot;%s&quot;, nome_arquivo);
+                printf(&quot;\n%d %d&quot;, editada-&gt;larg, editada-&gt;alt);
+                salvarArquivo(original, nome_arquivo);
+            } else {
+                printf(&quot;Abra um arquivo primeiro.\n&quot;);
+                continue;
+            }
+        } else if(!strcmp(opt, &quot;rot&quot;)) {
+        printf(&quot;\n------- ROTACIONAR -------\n&quot;);
+        char direcao[4];
+        printf(&quot;• esq - Esquerda\n• dir - Direita\n&quot;);
+        scanf(&quot;%s&quot;, direcao);
+
+        direcao[strcspn(direcao, &quot;\n&quot;)] = 0;
+        printf(&quot;%d %d&quot;, original-&gt;larg, original-&gt;alt);
+        editada = rotacionar(original, direcao);
+        original = editada;
+        printf(&quot;%d %d&quot;, original-&gt;larg, original-&gt;alt);
+
+
+    } else if(!strcmp(opt, &quot;flp&quot;)) {
+        printf(&quot;\n------- ESPELHAR -------\n&quot;);
+        char sentido[4];
+        printf(&quot;• ver - Vertical\n• hor - Horizontal\n&quot;);
+        scanf(&quot;%s&quot;, sentido);
+        printf(&quot;sentido: %s&quot;, sentido);
+
+        sentido[strcspn(sentido, &quot;\n&quot;)] = 0;
+
+        if(!strcmp(sentido, &quot;ver&quot;)) {
+            editada = inverterVerticalmente(original);
+            original = editada;
+        } else if(!strcmp(sentido, &quot;hor&quot;)) {
+            editada = inverterHorizontalmente(original);
+            original = editada;
+        } else {
+            printf(&quot;\nOpcao invalida.&quot;);
+            continue;
+        }    
+    } else if(!strcmp(opt, &quot;gry&quot;)) {
+        printf(&quot;\n------- TONS DE CINZA -------\n&quot;);
+        editada = escalaCinza(original);
+        original = editada;
+
+    } else if(!strcmp(opt, &quot;blu&quot;)) {
+        printf(&quot;\n------- BLURING -------\n&quot;);
+        editada = blur(original);
+        original = editada;
+
+    } else if(!strcmp(opt, &quot;sha&quot;)) {
+        printf(&quot;\n------- SHARPENING -------\n&quot;);
+        editada = sharp(original);
+        original = editada;
+
+    } else if(!strcmp(opt, &quot;amp&quot;)) {
+        printf(&quot;\n------- AUMENTAR ESCALA -------\n&quot;);
+        editada = aumentar(original);
+        original = editada;
+
+    } else if(!strcmp(opt, &quot;red&quot;)) {
+        printf(&quot;\n------- REDUZIR ESCALA -------\n&quot;);
+        editada = reduzir(original);
+        original = editada;
+
+    } else if(!strcmp(opt, &quot;thr&quot;)) {
+        printf(&quot;\n------- THRESHOLDING -------\n&quot;);
+        int limiar = 127;
+        do {
+            printf(&quot;\nInforme o valor da limiar desejado (Ex: 127): &quot;);
+            scanf(&quot;%d&quot;, &amp;limiar);
+        } while (limiar &lt; 0 &amp;&amp; 255 &gt; limiar);
+
+        editada = binarizar(original, limiar);
+        original = editada;
+
+    } else {
+            printf(&quot;\nOpcao invalida!\n&quot;);
+        }  
+
+    } while (strcmp(opt, &quot;exit&quot;));
+
+  return 1;
+}
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../tamanho/" class="btn btn-neutral" title="tamanho.c"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../tamanho/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+    </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+
+</body>
+</html>

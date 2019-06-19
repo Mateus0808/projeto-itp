@@ -1,0 +1,40 @@
+.wy-side-nav-search {
+  background-color: #000000;
+}
+
+.rst-content img {
+  max-width: 30%;
+}
+
+.wy-menu-vertical a {
+  color: #f9f7f7;
+  line-height: 25px;
+  font-weight: bold;
+  font-size: 100%;
+  text-transform: capitalize;
+}
+
+.wy-menu-vertical li.current {
+    background: #000000;
+}
+
+.wy-nav-side {
+  background: #000000;
+}
+
+.wy-menu-vertical li.current a {
+    color: red;
+}
+
+div.section
+p:nth-child(0){text-align: center}
+
+img[src*='#center'] {
+    display: block;
+    margin: auto;
+}
+
+p {
+  text-align: center;
+  font-family: verdana;
+}
