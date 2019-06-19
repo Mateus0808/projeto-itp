@@ -1,0 +1,16 @@
+site_name: Projeto ITP
+theme:
+  name: readthedocs
+
+nav:
+  - Home: index.md
+  - Programa:
+    - funcoes.h: programa/funcoes.md
+    - arquivo.c: programa/arquivo.md
+    - filtros.c: programa/filtros.md
+    - rotacionar.c: programa/rotacionar.md
+    - tamanho.c: programa/tamanho.md
+    - main: programa/main.md
+
+extra_css:
+  - css/extra_css.css
